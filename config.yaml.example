@@ -1,0 +1,56 @@
+# Qdrant 向量資料庫配置
+qdrant:
+  host: localhost
+  port: 6333
+  collection_name: stock_analysis
+
+# FinMind API 配置（可選，用於取得更完整的台股資料）
+finmind:
+  api_url: https://api.finmindtrade.com/api/v4/data
+  token: ""  # 留空使用免費額度，或填入您的 API token
+
+# Ollama 本地 LLM 配置
+ollama:
+  host: http://localhost:11434
+  model: deepseek-r1:1.5b
+
+# Embedding 向量化模型
+embedding:
+  model: paraphrase-multilingual-MiniLM-L12-v2
+  vector_size: 384
+
+# 資料載入設定
+data:
+  default_days: 30  # 預設載入幾天的歷史資料
+
+  # 股票清單（含代碼和名稱）
+  stocks:
+    "2330": "台積電"
+    "2317": "鴻海"
+    "2454": "聯發科"
+    "2303": "聯電"
+    "3711": "日月光投控"
+    "2382": "廣達"
+    "2308": "台達電"
+    "2357": "華碩"
+    "2379": "瑞昱"
+    "3034": "聯詠"
+    "2327": "國巨"
+    "2408": "南亞科"
+    "3008": "大立光"
+    "2301": "光寶科"
+    "2337": "旺宏"
+
+# RAG 檢索設定
+rag:
+  top_k: 5  # 每次查詢返回的相關文檔數量
+
+# 系統提示詞
+system_prompt: |
+  你是一個專業的台灣股市分析助手。
+  請根據提供的歷史資料和技術指標，提供專業、客觀的分析和建議。
+  注意：
+  1. 僅根據提供的資料進行分析
+  2. 說明你的分析依據
+  3. 避免過度承諾或保證
+  4. 提醒投資風險
