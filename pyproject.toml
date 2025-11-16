@@ -37,8 +37,7 @@ dependencies = [
 
 [project.scripts]
 stock-qa = "tw_stock_analyst.cli:main"
-stock-load = "tw_stock_analyst.data_loader:main"
-stock-sync = "tw_stock_analyst.sync:main"
+stock-sync = "tw_stock_analyst.data_sync:main"
 
 [build-system]
 requires = ["uv_build>=0.9.7,<0.10.0"]
