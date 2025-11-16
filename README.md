@@ -1,36 +1,36 @@
-# 台股智能分析系統 (TW Stock Analyst)
+# Taiwan Stock Analyst
 
-> 🚀 基於 RAG 架構的台灣股市智能分析系統，整合向量資料庫、本地 LLM 與技術指標分析
+> 🚀 A Taiwan Stock Market intelligent analysis system based on RAG architecture, integrating vector database, local LLM, and technical indicators analysis
 
-一個完全本地部署的台灣股市分析系統，結合檢索增強生成（RAG）技術、向量資料庫和本地大型語言模型，提供專業、即時且保護隱私的股市分析服務。
+A fully locally-deployed Taiwan stock market analysis system that combines Retrieval-Augmented Generation (RAG) technology, vector database, and local large language models to provide professional, real-time, and privacy-preserving stock market analysis services.
 
-## ✨ 核心特性
+## ✨ Key Features
 
-- **🔒 完全本地部署** - 所有資料處理和模型推理均在本地執行，無需雲端服務
-- **🤖 智能問答系統** - 使用自然語言提問，獲得基於數據的專業分析
-- **📊 多維度數據分析** - 整合技術指標（MA、RSI、MACD、KD 等）與基本面財報數據
-- **🔍 語義檢索** - 基於向量化的精準資料檢索，快速定位相關股票信息
-- **⚡ 即時數據同步** - 支援增量更新，自動獲取最新台股資料
-- **🌐 繁體中文優化** - 完整支援繁體中文互動和分析
-- **📈 台股專注** - 預設監控 15 檔台灣科技龍頭股（可自訂）
+- **🔒 Fully Local Deployment** - All data processing and model inference run locally, no cloud services required
+- **🤖 Intelligent Q&A System** - Ask questions in natural language and get data-driven professional analysis
+- **📊 Multi-dimensional Data Analysis** - Integrates technical indicators (MA, RSI, MACD, KD, etc.) and fundamental financial data
+- **🔍 Semantic Retrieval** - Vector-based precise data retrieval for quick access to relevant stock information
+- **⚡ Real-time Data Synchronization** - Supports incremental updates to automatically fetch latest Taiwan stock data
+- **🌐 Chinese Language Optimized** - Full support for Traditional Chinese interaction and analysis
+- **📈 Taiwan Stock Focused** - Pre-configured to monitor 15 Taiwan tech leading stocks (customizable)
 
-## 🏗️ 系統架構
+## 🏗️ System Architecture
 
 ```
 ┌─────────────┐
-│   使用者     │
+│     User    │
 └──────┬──────┘
-       │ 自然語言提問
+       │ Natural Language Query
        ▼
 ┌─────────────────────────────────────┐
-│         CLI 互動介面 (Rich)          │
+│      CLI Interface (Rich)           │
 └─────────────┬───────────────────────┘
               │
        ┌──────┴──────┐
        │             │
        ▼             ▼
 ┌────────────┐  ┌──────────────┐
-│ 數據同步層  │  │   RAG 層     │
+│ Data Sync  │  │   RAG Layer  │
 │  FinMind   │  │  ┌─────────┐ │
 │  twstock   │  │  │Retriever│ │
 └─────┬──────┘  │  └────┬────┘ │
@@ -48,54 +48,54 @@
             │
             ▼
 ┌──────────────────────────┐
-│   Qdrant 向量資料庫       │
+│   Qdrant Vector DB       │
 │   (Docker Container)      │
 └──────────────────────────┘
 ```
 
-## 🛠️ 技術棧
+## 🛠️ Tech Stack
 
-| 類別 | 技術 |
-|------|------|
-| **語言** | Python 3.12+ |
-| **向量資料庫** | Qdrant |
-| **向量化模型** | Sentence Transformers (paraphrase-multilingual-MiniLM-L12-v2) |
-| **本地 LLM** | Ollama + Deepseek R1 (1.5B) |
-| **台股數據來源** | FinMind API, twstock |
-| **技術指標** | TA-Lib (MA, RSI, MACD, KD, Bollinger Bands, ATR, OBV) |
-| **資料處理** | Pandas, NumPy |
-| **CLI 介面** | Rich |
-| **配置管理** | Pydantic, PyYAML |
-| **容器化** | Docker Compose |
-| **套件管理** | uv |
+| Category | Technology |
+|----------|------------|
+| **Language** | Python 3.12+ |
+| **Vector Database** | Qdrant |
+| **Embedding Model** | Sentence Transformers (paraphrase-multilingual-MiniLM-L12-v2) |
+| **Local LLM** | Ollama + Deepseek R1 (1.5B) |
+| **Taiwan Stock Data** | FinMind API, twstock |
+| **Technical Indicators** | ta (MA, RSI, MACD, KD, Bollinger Bands, ATR, OBV) |
+| **Data Processing** | Pandas, NumPy |
+| **CLI Interface** | Rich |
+| **Configuration** | Pydantic, PyYAML |
+| **Containerization** | Docker Compose |
+| **Package Manager** | uv |
 
-## 📋 系統需求
+## 📋 System Requirements
 
-### 軟體需求
+### Software Requirements
 
-- **Python**: 3.12 或更高版本
-- **Docker**: 最新版本（用於運行 Qdrant）
-- **Ollama**: 最新版本（用於運行本地 LLM）
-- **uv**: Python 套件管理工具
+- **Python**: 3.12 or higher
+- **Docker**: Latest version (for running Qdrant)
+- **Ollama**: Latest version (for running local LLM)
+- **uv**: Python package management tool
 
-### 硬體建議
+### Hardware Recommendations
 
-- **RAM**: 最低 8GB（建議 16GB 以上）
-- **磁碟空間**: 至少 10GB（用於模型和資料儲存）
-- **網路**: 穩定的網路連線（用於初次下載模型和同步資料）
+- **RAM**: Minimum 8GB (16GB+ recommended)
+- **Disk Space**: At least 10GB (for models and data storage)
+- **Network**: Stable internet connection (for initial model download and data synchronization)
 
 ## 🚀 Quick Start
 
-### 1. 環境準備
+### 1. Environment Setup
 
-#### 安裝 Python 3.12+
+#### Install Python 3.12+
 
 ```bash
-# 檢查 Python 版本
-python --version  # 需要 >= 3.12
+# Check Python version
+python --version  # Should be >= 3.12
 ```
 
-#### 安裝 uv 套件管理工具
+#### Install uv Package Manager
 
 ```bash
 # macOS/Linux
@@ -105,221 +105,221 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-#### 安裝 Docker
+#### Install Docker
 
-從 [Docker 官網](https://www.docker.com/get-started) 下載並安裝適合您作業系統的版本。
+Download and install Docker from the [official Docker website](https://www.docker.com/get-started) for your operating system.
 
-#### 安裝 Ollama
+#### Install Ollama
 
-從 [Ollama 官網](https://ollama.ai) 下載並安裝。
+Download and install from the [official Ollama website](https://ollama.ai).
 
-### 2. 專案設置
+### 2. Project Setup
 
-#### 克隆專案
+#### Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/tw-stock-analyst.git
 cd tw-stock-analyst
 ```
 
-#### 安裝 Python 依賴
+#### Install Python Dependencies
 
 ```bash
-# 使用 uv 安裝依賴
+# Install dependencies using uv
 uv pip install -e .
 ```
 
-#### 配置設定檔
+#### Configure Settings
 
 ```bash
-# 複製配置範本
+# Copy configuration template
 cp config.yaml.example config.yaml
 
-# 編輯配置檔（可選：設置 FinMind API Token 以獲得更高請求限額）
+# Edit configuration file (Optional: Set FinMind API Token for higher rate limits)
 nano config.yaml
 ```
 
-**config.yaml 關鍵設定**：
+**Key config.yaml settings**:
 ```yaml
 data:
   stocks:
-    - 2330  # 台積電
-    - 2317  # 鴻海
-    - 2454  # 聯發科
-    # ... 可自行新增監控股票
+    - 2330  # TSMC
+    - 2317  # Hon Hai (Foxconn)
+    - 2454  # MediaTek
+    # ... Add more stock codes to monitor
 
 finmind:
-  token: "YOUR_FINMIND_TOKEN"  # 可選，到 https://finmindtrade.com 註冊取得
+  token: "YOUR_FINMIND_TOKEN"  # Optional, register at https://finmindtrade.com
 ```
 
-### 3. 啟動服務
+### 3. Start Services
 
-#### 啟動 Qdrant 向量資料庫
+#### Start Qdrant Vector Database
 
 ```bash
-# 使用 Docker Compose 啟動
+# Start using Docker Compose
 docker compose up -d
 
-# 驗證服務狀態
+# Verify service status
 curl http://localhost:6333/health
-# 應該返回：{"title":"qdrant - vector search engine","version":"..."}
+# Should return: {"title":"qdrant - vector search engine","version":"..."}
 ```
 
-#### 下載並啟動 Ollama LLM
+#### Download and Start Ollama LLM
 
 ```bash
-# 在一個終端視窗啟動 Ollama 服務
+# Start Ollama service in one terminal
 ollama serve
 
-# 在另一個終端視窗下載 Deepseek 模型
+# In another terminal, download Deepseek model
 ollama pull deepseek-r1:1.5b
 ```
 
-### 4. 同步股票資料
+### 4. Synchronize Stock Data
 
-首次使用前需要同步台股資料到向量資料庫：
+Before first use, synchronize Taiwan stock data to the vector database:
 
 ```bash
-# 同步最近 30 天的所有配置股票資料（含技術指標和財報）
+# Sync last 30 days of data for all configured stocks (including technical indicators and financials)
 stock-sync --days 30 -v
 
-# 或僅同步特定股票
+# Or sync specific stocks only
 stock-sync --stocks 2330 2317 2454 --days 7 -v
 
-# 跳過財報資料（加快同步速度）
+# Skip financial data (faster sync)
 stock-sync --days 7 --skip-fundamentals -v
 ```
 
-**同步參數說明**：
-- `--days N`: 同步最近 N 天的資料
-- `--stocks CODE1 CODE2 ...`: 指定股票代碼（不指定則使用 config.yaml 中的清單）
-- `--skip-fundamentals`: 跳過財務報表資料
-- `-v` 或 `--verbose`: 顯示詳細日誌
+**Sync Parameter Descriptions**:
+- `--days N`: Sync data from the last N days
+- `--stocks CODE1 CODE2 ...`: Specify stock codes (if not specified, uses list from config.yaml)
+- `--skip-fundamentals`: Skip financial statement data
+- `-v` or `--verbose`: Show detailed logs
 
-### 5. 開始使用
+### 5. Start Using
 
 ```bash
-# 啟動互動式問答介面
+# Launch interactive Q&A interface
 stock-qa
 ```
 
-**使用範例**：
+**Usage Examples**:
 
 ```
-您的問題: 台積電最近的技術指標表現如何？
+Your question: How are TSMC's recent technical indicators performing?
 
-[系統分析中...]
+[Analyzing...]
 
-回答: 根據最新數據，台積電（2330）技術指標顯示：
+Answer: Based on the latest data, TSMC (2330) technical indicators show:
 
-1. 趨勢分析：
-   - 5 日均線在 20 日均線之上，短期呈現上漲趨勢
-   - MACD 指標為正值，買入信號強勁
+1. Trend Analysis:
+   - 5-day MA is above 20-day MA, showing short-term upward trend
+   - MACD indicator is positive, strong buy signal
 
-2. 動能指標：
-   - RSI(14) 為 68，接近超買區但仍在合理範圍
-   - KD 指標黃金交叉，K 值 > D 值
+2. Momentum Indicators:
+   - RSI(14) is at 68, approaching overbought but still in reasonable range
+   - KD indicator shows golden cross, K value > D value
 
-3. 建議：短期多頭格局，但需留意 RSI 是否進入超買區（>70）
+3. Recommendation: Short-term bullish pattern, but watch if RSI enters overbought zone (>70)
 ```
 
 ```
-您的問題: 比較台積電和聯發科的營收成長率
+Your question: Compare the revenue growth rates of TSMC and MediaTek
 
-[系統分析中...]
+[Analyzing...]
 
-回答: [基於財報資料的營收比較分析...]
+Answer: [Revenue comparison analysis based on financial data...]
 ```
 
-輸入 `exit` 或 `quit` 離開問答系統。
+Type `exit` or `quit` to exit the Q&A system.
 
-## 📁 專案結構
+## 📁 Project Structure
 
 ```
 tw-stock-analyst/
-├── README.md                      # 專案說明文件
-├── LICENSE                        # MIT 授權條款
-├── pyproject.toml                 # 專案配置和依賴定義
-├── config.yaml.example            # 配置範本
-├── docker-compose.yml             # Qdrant 容器配置
-├── uv.lock                        # 依賴鎖定檔
-├── qdrant_storage/                # Qdrant 資料持久化目錄
-└── src/tw_stock_analyst/          # 主要原始碼
+├── README.md                      # Project documentation
+├── LICENSE                        # MIT License
+├── pyproject.toml                 # Project configuration and dependencies
+├── config.yaml.example            # Configuration template
+├── docker-compose.yml             # Qdrant container configuration
+├── uv.lock                        # Dependency lock file
+├── qdrant_storage/                # Qdrant data persistence directory
+└── src/tw_stock_analyst/          # Main source code
     ├── __init__.py
-    ├── cli.py                     # 互動式 CLI 主程式
-    ├── config.py                  # 配置載入與驗證
-    ├── data_sync.py               # 資料同步腳本
-    ├── data/                      # 資料採集模組
-    │   ├── stock_collector.py     # 台股資料獲取
-    │   ├── indicators.py          # 技術指標計算
-    │   └── fundamentals.py        # 財務資料格式化
-    ├── vectordb/                  # 向量資料庫模組
-    │   ├── qdrant_client.py       # Qdrant 客戶端封裝
-    │   └── embeddings.py          # 向量化模型
-    └── rag/                       # RAG 檢索生成模組
-        ├── retriever.py           # 文檔檢索器
-        └── generator.py           # LLM 回答生成器
+    ├── cli.py                     # Interactive CLI main program
+    ├── config.py                  # Configuration loading and validation
+    ├── data_sync.py               # Data synchronization script
+    ├── data/                      # Data collection module
+    │   ├── stock_collector.py     # Taiwan stock data fetching
+    │   ├── indicators.py          # Technical indicators calculation
+    │   └── fundamentals.py        # Financial data formatting
+    ├── vectordb/                  # Vector database module
+    │   ├── qdrant_client.py       # Qdrant client wrapper
+    │   └── embeddings.py          # Embedding model
+    └── rag/                       # RAG retrieval and generation module
+        ├── retriever.py           # Document retriever
+        └── generator.py           # LLM answer generator
 ```
 
-## ⚙️ 配置說明
+## ⚙️ Configuration Guide
 
-### FinMind API Token（可選）
+### FinMind API Token (Optional)
 
-未設定 Token 的情況下，FinMind API 有請求頻率限制。建議：
+Without a token, FinMind API has rate limits. Recommended steps:
 
-1. 前往 [FinMind Trade](https://finmindtrade.com) 註冊帳號
-2. 在個人設定中取得 API Token
-3. 將 Token 填入 `config.yaml` 的 `finmind.token` 欄位
+1. Visit [FinMind Trade](https://finmindtrade.com) and register an account
+2. Obtain an API Token from your personal settings
+3. Add the token to the `finmind.token` field in `config.yaml`
 
-### 監控股票清單
+### Stock Monitoring List
 
-編輯 `config.yaml` 中的 `data.stocks` 區塊：
+Edit the `data.stocks` section in `config.yaml`:
 
 ```yaml
 data:
   stocks:
-    - 2330  # 台積電
-    - 2317  # 鴻海
-    - 2454  # 聯發科
-    - 2412  # 中華電
-    - 2308  # 台達電
-    # ... 新增更多股票代碼
+    - 2330  # TSMC
+    - 2317  # Hon Hai
+    - 2454  # MediaTek
+    - 2412  # Chunghwa Telecom
+    - 2308  # Delta Electronics
+    # ... Add more stock codes
 ```
 
-### RAG 檢索參數
+### RAG Retrieval Parameters
 
-調整檢索精準度：
+Adjust retrieval precision:
 
 ```yaml
 rag:
-  top_k: 5          # 每次檢索返回的文檔數量（1-10）
-  score_threshold: 0.5  # 最低相似度門檻（0-1）
+  top_k: 5          # Number of documents to return per retrieval (1-10)
+  score_threshold: 0.5  # Minimum similarity threshold (0-1)
 ```
 
-## 🔧 進階使用
+## 🔧 Advanced Usage
 
-### 定期自動同步
+### Scheduled Automatic Sync
 
-使用 cron（Linux/macOS）或任務排程器（Windows）設定每日自動同步：
+Use cron (Linux/macOS) or Task Scheduler (Windows) to set up daily automatic synchronization:
 
 ```bash
-# 每天早上 9:00 同步前一天的資料
+# Sync previous day's data every day at 9:00 AM
 0 9 * * * /path/to/stock-sync --days 1 --skip-fundamentals
 ```
 
-### 自訂 LLM 模型
+### Custom LLM Model
 
-更改為其他 Ollama 支援的模型：
+Change to another Ollama-supported model:
 
 ```yaml
 ollama:
   base_url: "http://localhost:11434"
-  model: "llama3:8b"  # 或其他模型
+  model: "llama3:8b"  # Or other models
 ```
 
-### 批次查詢模式
+### Batch Query Mode
 
-建立查詢腳本：
+Create a query script:
 
 ```python
 from tw_stock_analyst.rag import Retriever, Generator
@@ -328,8 +328,8 @@ retriever = Retriever()
 generator = Generator()
 
 questions = [
-    "台積電的 RSI 指標是多少？",
-    "鴻海的營收年成長率如何？",
+    "What is TSMC's RSI indicator?",
+    "How is Hon Hai's year-over-year revenue growth?",
 ]
 
 for q in questions:
@@ -338,53 +338,53 @@ for q in questions:
     print(f"Q: {q}\nA: {answer}\n")
 ```
 
-## ❓ 常見問題
+## ❓ FAQ
 
-### Q: Qdrant 連線失敗
+### Q: Qdrant connection failed
 
-**A**: 確認 Docker 容器正在運行：
+**A**: Verify that the Docker container is running:
 ```bash
 docker ps | grep qdrant
 docker compose logs qdrant
 ```
 
-### Q: Ollama 模型載入緩慢
+### Q: Ollama model loading is slow
 
-**A**: 首次載入會下載模型（約 1-3GB），請耐心等待。可使用更小的模型如 `deepseek-r1:1.5b`。
+**A**: First-time loading will download the model (approximately 1-3GB), please be patient. You can use a smaller model like `deepseek-r1:1.5b`.
 
-### Q: FinMind API 返回 429 錯誤
+### Q: FinMind API returns 429 error
 
-**A**: 超過免費額度限制，請：
-1. 註冊並設定 API Token
-2. 減少 `--days` 參數
-3. 分批同步股票
+**A**: Exceeded free tier limits, please:
+1. Register and set up an API Token
+2. Reduce the `--days` parameter
+3. Sync stocks in batches
 
-### Q: 記憶體不足
+### Q: Out of memory
 
-**A**: 嘗試：
-1. 使用更小的 LLM 模型
-2. 減少 `rag.top_k` 參數
-3. 限制監控股票數量
+**A**: Try:
+1. Use a smaller LLM model
+2. Reduce the `rag.top_k` parameter
+3. Limit the number of monitored stocks
 
-## 🤝 貢獻
+## 🤝 Contributing
 
-歡迎提交 Issue 和 Pull Request！
+Issues and Pull Requests are welcome!
 
-## 📄 授權條款
+## 📄 License
 
-本專案採用 [MIT License](LICENSE) 授權。
+This project is licensed under the [MIT License](LICENSE).
 
-## 🙏 致謝
+## 🙏 Acknowledgments
 
-- [FinMind](https://finmindtrade.com) - 提供台股資料 API
-- [Qdrant](https://qdrant.tech) - 高效向量資料庫
-- [Ollama](https://ollama.ai) - 簡化本地 LLM 部署
-- [Sentence Transformers](https://www.sbert.net) - 強大的向量化模型
+- [FinMind](https://finmindtrade.com) - Taiwan stock data API provider
+- [Qdrant](https://qdrant.tech) - High-performance vector database
+- [Ollama](https://ollama.ai) - Simplified local LLM deployment
+- [Sentence Transformers](https://www.sbert.net) - Powerful embedding models
 
-## 📧 聯絡方式
+## 📧 Contact
 
-如有問題或建議，歡迎開啟 [Issue](https://github.com/your-username/tw-stock-analyst/issues)。
+For questions or suggestions, please open an [Issue](https://github.com/your-username/tw-stock-analyst/issues).
 
 ---
 
-**免責聲明**: 本系統提供的分析僅供參考，不構成投資建議。投資有風險，決策請謹慎。
+**Disclaimer**: The analysis provided by this system is for reference only and does not constitute investment advice. Investing involves risks; please make decisions carefully.
