@@ -1,4 +1,4 @@
-"""Incremental stock data sync for cronjob scheduling."""
+"""Incremental stock data sync"""
 
 import logging
 import sys
@@ -279,7 +279,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="增量同步台股資料（適合 cronjob）"
+        description="增量同步台股資料到向量資料庫"
     )
     parser.add_argument(
         "--stocks",
