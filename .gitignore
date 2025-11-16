@@ -11,3 +11,8 @@ wheels/
 # Virtual environments
 .venv
 config.yaml
+
+.claude/
+CLAUDE.md
+AGENTS.md
+GEMINI.md
