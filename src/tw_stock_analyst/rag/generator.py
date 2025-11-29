@@ -1,11 +1,11 @@
-"""RAG generator using local Deepseek model via Ollama."""
+"""RAG generator using local model via Ollama."""
 
 import ollama
 from typing import Optional
 
 
 class StockAnalysisGenerator:
-    """Generate stock analysis using Deepseek model."""
+    """Generate stock analysis using model."""
 
     def __init__(
         self,

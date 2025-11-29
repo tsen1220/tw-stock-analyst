@@ -2,9 +2,11 @@
 
 基於向量資料庫與本地 LLM 的台灣股市智能分析系統，使用 Retrieval-Augmented Generation (RAG) 技術提供專業的股市問答與分析。
 
+> 本文以 **deepseek-r1:1.5b** 為範例說明，你可以根據需求更換為其他 Ollama 支援的模型。
+
 ## 特色功能
 
-- **本地化部署**：使用 Ollama 運行本地 LLM (Deepseek)，無需依賴雲端 API
+- **本地化部署**：使用 Ollama 運行本地 LLM（支援多種模型，如 deepseek、llama、qwen 等），無需依賴雲端 API
 - **向量檢索**：透過 Qdrant 向量資料庫實現語義搜索
 - **技術分析**：自動計算 MA、RSI、MACD、KD、布林通道等多項技術指標
 - **基本面數據**：整合財報資料（營收、EPS、獲利能力等）
@@ -36,7 +38,7 @@
        │
        ▼
 ┌──────────────────┐
-│  Ollama LLM      │ (Deepseek R1)
+│  Ollama LLM      │ (本地模型)
 │  (RAG Generate)  │
 └──────┬───────────┘
        │
@@ -50,7 +52,7 @@
 
 | 組件 | 技術 | 用途 |
 |------|------|------|
-| **LLM** | Ollama (Deepseek R1 1.5B) | 本地推理與回答生成 |
+| **LLM** | Ollama（以 deepseek-r1:1.5b 為例） | 本地推理與回答生成 |
 | **Vector DB** | Qdrant | 向量存儲與語義檢索 |
 | **Embedding** | sentence-transformers | 多語言文本向量化 |
 | **資料來源** | FinMind API + twstock | 台股即時與歷史資料 |
@@ -81,7 +83,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 # 啟動 Ollama 服務
 ollama serve
 
-# 下載 Deepseek 模型
+# 下載模型（以 deepseek-r1:1.5b 為例，可替換為其他模型）
 ollama pull deepseek-r1:1.5b
 ```
 
@@ -156,10 +158,10 @@ finmind:
   api_url: https://api.finmindtrade.com/api/v4/data
   token: ""  # 可填入 API token 以提升額度
 
-# Ollama 本地 LLM
+# Ollama 本地 LLM（可更換為其他模型）
 ollama:
   host: http://localhost:11434
-  model: deepseek-r1:1.5b
+  model: deepseek-r1:1.5b  # 可改為 llama3:8b、qwen2.5 等
 
 # Embedding 模型
 embedding:
@@ -257,14 +259,14 @@ $ uv run stock-qa
 
 ┌──────────────────────────────┐
 │ 台股分析 RAG 系統             │
-│ 使用本地 Deepseek 模型進行   │
-│ 股市問答                     │
+│ 使用本地 deepseek-r1:1.5b    │
+│ 模型進行股市問答              │
 └──────────────────────────────┘
 
 正在初始化系統...
 ✓ Qdrant 已連接 (向量數量: 1500)
 ✓ Embedding 模型已載入
-✓ Deepseek 模型已就緒
+✓ deepseek-r1:1.5b 模型已就緒
 
 開始問答（輸入 'quit' 或 'exit' 退出）
 
@@ -325,15 +327,19 @@ data:
 
 ### 更換 LLM 模型
 
+編輯 `config.yaml`：
+
 ```yaml
 ollama:
-  model: llama3:8b  # 或其他 Ollama 支援的模型
+  model: llama3:8b  # 可選：qwen2.5、mistral、gemma 等
 ```
 
-然後執行：
+下載對應模型：
 ```bash
 ollama pull llama3:8b
 ```
+
+CLI 將自動顯示當前使用的模型名稱。
 
 ### 調整檢索數量
 
@@ -377,7 +383,7 @@ docker compose restart
 # 檢查已安裝模型
 ollama list
 
-# 下載缺少的模型
+# 下載 config.yaml 中指定的模型（以 deepseek-r1:1.5b 為例）
 ollama pull deepseek-r1:1.5b
 ```
 
@@ -417,8 +423,9 @@ tail -f logs/stock_sync.log
 
 ### LLM 推理優化
 
-- 使用較小的模型 (如 `deepseek-r1:1.5b`)
+- 使用較小的模型（如 `deepseek-r1:1.5b`、`llama3.2:1b`）
 - 限制 Context 長度
+- 根據硬體資源選擇適合的模型大小
 
 ### 資料同步優化
 

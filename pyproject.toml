@@ -1,7 +1,7 @@
 [project]
 name = "tw-stock-analyst"
 version = "0.1.0"
-description = "Taiwan Stock Market RAG System with Vector Database for Local LLM (Deepseek)"
+description = "Taiwan Stock Market RAG System with Vector Database for Local LLM"
 readme = "README.md"
 authors = [
     { name = "Ken Tseng" }

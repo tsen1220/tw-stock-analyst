@@ -20,7 +20,7 @@ def main():
     """Main CLI entry point."""
     console.print(Panel.fit(
         "[bold cyan]台股分析 RAG 系統[/bold cyan]\n"
-        "使用本地 Deepseek 模型進行股市問答",
+        f"使用本地 {settings.ollama.model} 模型進行股市問答",
         border_style="cyan"
     ))
 
@@ -62,7 +62,7 @@ def main():
             if response == "n":
                 return
 
-        console.print(f"[green]✓[/green] Deepseek 模型已就緒\n")
+        console.print(f"[green]✓[/green] {settings.ollama.model} 模型已就緒\n")
 
         # Retriever
         retriever = StockRetriever(vector_db, embedding_model)
