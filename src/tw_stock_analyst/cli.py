@@ -83,7 +83,7 @@ def main():
 
                 # Retrieve relevant documents
                 console.print("[dim]正在檢索相關資料...[/dim]")
-                results = retriever.retrieve(query, top_k=3)
+                results = retriever.retrieve(query, top_k=settings.rag.top_k)
 
                 if not results:
                     console.print("[yellow]找不到相關的股市資料。請先載入資料。[/yellow]")

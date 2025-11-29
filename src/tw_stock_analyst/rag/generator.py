@@ -76,7 +76,7 @@ class StockAnalysisGenerator:
         """Check if the model is available in Ollama."""
         try:
             models = ollama.list()
-            model_names = [m['name'] for m in models.get('models', [])]
+            model_names = [m.model for m in models.models]
             return any(self.model_name in name for name in model_names)
         except Exception as e:
             print(f"Error checking model availability: {e}")
