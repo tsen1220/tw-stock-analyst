@@ -11,6 +11,7 @@ from qdrant_client.models import (
     MatchValue,
 )
 import hashlib
+import uuid
 
 from ..config import settings
 
@@ -102,7 +103,9 @@ class StockVectorDB:
             Point ID
         """
         unique_key = f"{stock_id}_{date}_{data_type}"
-        point_id = hashlib.sha256(unique_key.encode()).hexdigest()
+        # Generate UUID from SHA256 hash (take first 32 hex chars = 128 bits)
+        hash_hex = hashlib.sha256(unique_key.encode()).hexdigest()[:32]
+        point_id = str(uuid.UUID(hex=hash_hex))
 
         payload = {
             "text": text,
