@@ -220,39 +220,46 @@ def sync_stock_data(
                     logger.error(f"  Failed to insert technical data {stock_id} {date}: {e}")
                     continue
 
-            # Sync fundamental data (only once per stock, not daily)
+            # Sync fundamental data (multiple quarters per stock)
             if not skip_fundamentals:
                 try:
-                    fundamentals = collector.get_fundamentals(stock_id)
+                    fundamentals_list = collector.get_fundamentals(stock_id)
 
-                    if fundamentals:
-                        fund_date = fundamentals.get('date', '')
+                    if fundamentals_list:
+                        logger.info(f"  Found {len(fundamentals_list)} quarters of fundamental data")
+                        latest_price = float(df.iloc[-1]['Close'])
 
-                        # Check if fundamental data already exists
-                        if not check_data_exists(vector_db, stock_id, fund_date, "fundamental"):
-                            latest_price = float(df.iloc[-1]['Close'])
+                        # Process each quarter's data
+                        for fundamentals in fundamentals_list:
+                            fund_date = fundamentals.get('date', '')
 
-                            fund_text = formatter.format_as_text(
-                                stock_id, stock_name, fundamentals, latest_price
-                            )
+                            if not fund_date:
+                                logger.warning(f"  Skipping fundamental data with missing date")
+                                continue
 
-                            fund_vector = embedding_model.encode(fund_text).tolist()
+                            # Check if fundamental data already exists
+                            if not check_data_exists(vector_db, stock_id, fund_date, "fundamental"):
+                                fund_text = formatter.format_as_text(
+                                    stock_id, stock_name, fundamentals, latest_price
+                                )
 
-                            vector_db.insert_stock_data(
-                                text=fund_text,
-                                vector=fund_vector,
-                                stock_id=stock_id,
-                                stock_name=stock_name,
-                                date=fund_date,
-                                data_type="fundamental",
-                                metadata=fundamentals
-                            )
+                                fund_vector = embedding_model.encode(fund_text).tolist()
 
-                            total_inserted += 1
-                            logger.info(f"  Inserted fundamental data: {stock_id} {fund_date}")
-                        else:
-                            logger.debug(f"  Skipping fundamental {stock_id} {fund_date} (already exists)")
-                            total_skipped += 1
+                                vector_db.insert_stock_data(
+                                    text=fund_text,
+                                    vector=fund_vector,
+                                    stock_id=stock_id,
+                                    stock_name=stock_name,
+                                    date=fund_date,
+                                    data_type="fundamental",
+                                    metadata=fundamentals
+                                )
+
+                                total_inserted += 1
+                                logger.info(f"  Inserted fundamental data: {stock_id} {fund_date}")
+                            else:
+                                logger.debug(f"  Skipping fundamental {stock_id} {fund_date} (already exists)")
+                                total_skipped += 1
 
                 except Exception as e:
                     logger.warning(f"  Failed to get fundamentals for {stock_id}: {e}")

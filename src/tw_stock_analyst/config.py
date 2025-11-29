@@ -34,6 +34,7 @@ class EmbeddingConfig(BaseModel):
 class DataConfig(BaseModel):
     """Data loading configuration."""
     default_days: int = 30
+    num_quarters: int = 4  # Number of quarters of fundamental data to load
     stocks: dict[str, str] = {
         "2330": "台積電",
         "2317": "鴻海",

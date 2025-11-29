@@ -86,19 +86,26 @@ class TaiwanStockCollector:
 
         return df
 
-    def get_fundamentals(self, stock_id: str) -> dict:
+    def get_fundamentals(self, stock_id: str, num_quarters: int = None) -> list[dict]:
         """
-        Get fundamental data for a stock.
+        Get fundamental data for a stock (multiple quarters).
 
         Args:
             stock_id: Stock code
+            num_quarters: Number of recent quarters to return (default: from config)
 
         Returns:
-            Dictionary with fundamental metrics
+            List of dictionaries with fundamental metrics, sorted by date (newest first)
         """
+        # Use config value if not specified
+        if num_quarters is None:
+            num_quarters = settings.data.num_quarters
+
         try:
-            # Get financial statements via API
-            start_date = (datetime.now() - timedelta(days=365*2)).strftime("%Y-%m-%d")
+            # Calculate years back based on num_quarters (4 quarters = 1 year, with buffer)
+            # Formula: at least 2 years, add 1 year for every 4 quarters beyond that
+            years_back = max(2, (num_quarters // 4) + 1)
+            start_date = (datetime.now() - timedelta(days=365*years_back)).strftime("%Y-%m-%d")
             params = {
                 "dataset": "TaiwanStockFinancialStatements",
                 "data_id": stock_id,
@@ -113,20 +120,30 @@ class TaiwanStockCollector:
             if data.get("status") == 200 and data.get("data"):
                 df = pd.DataFrame(data["data"])
                 if not df.empty:
-                    latest = df.iloc[-1]
-                    return {
-                        'stock_id': stock_id,
-                        'date': latest.get('date', ''),
-                        'revenue': latest.get('revenue', 0),
-                        'operating_income': latest.get('OperatingIncome', 0),
-                        'net_income': latest.get('NetIncome', 0),
-                        'eps': latest.get('eps', 0),
-                    }
+                    # Sort by date descending (newest first) to ensure we get the latest data
+                    df = df.sort_values('date', ascending=False)
+
+                    # Take only the most recent N quarters
+                    recent_df = df.head(num_quarters)
+
+                    # Convert to list of dicts
+                    fundamentals = []
+                    for _, row in recent_df.iterrows():
+                        fundamentals.append({
+                            'stock_id': stock_id,
+                            'date': row.get('date', ''),
+                            'revenue': row.get('revenue', 0),
+                            'operating_income': row.get('OperatingIncome', 0),
+                            'net_income': row.get('NetIncome', 0),
+                            'eps': row.get('eps', 0),
+                        })
+
+                    return fundamentals
 
         except Exception as e:
             print(f"Failed to get fundamentals: {e}")
 
-        return {}
+        return []
 
     def get_tech_stocks(self) -> list[str]:
         """
